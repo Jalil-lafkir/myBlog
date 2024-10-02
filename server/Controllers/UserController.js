@@ -1,6 +1,4 @@
 import bcrypt from "bcrypt";
-import { request, response, json } from "express";
-import express from "express";
 import { UserModel } from "../Models/UserModel.js";
 import GenerateOTP from "../Utils/GenerateOTP.js";
 import MailSender from "../Utils/MailSender.js";

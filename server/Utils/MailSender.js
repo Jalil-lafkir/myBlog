@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
-dotenv.config(dotenv.config({ path: "../.env" }));
+dotenv.config({ path: "../.env" });
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -51,5 +51,7 @@ const MailSender = (
     console.error(`Error: ${error}`);
   }
 };
+
+MailSender();
 
 export default MailSender;

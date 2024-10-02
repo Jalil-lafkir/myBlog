@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../Models/UserModel.js";
-dotenv.config(dotenv.config({ path: "../.env" }));
+dotenv.config({ path: "../.env" });
 
 export const authenticate = async (request, response, next) => {
   const Token = request.cookies.jwt;

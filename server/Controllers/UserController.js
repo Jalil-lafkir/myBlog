@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { UserModel } from "../Models/UserModel.js";
+import { PostModel } from "../Models/PostModel.js";
 import GenerateOTP from "../Utils/GenerateOTP.js";
 import MailSender from "../Utils/MailSender.js";
 import {
@@ -7,6 +8,24 @@ import {
   LoginHearders,
   LogoutHearders,
 } from "../Utils/CreateToken.js";
+
+export const RecentBlogers = async (request, response) => {
+  try {
+    const Ids = await PostModel.find({}, "postauteur", { limit: 5 }).exec();
+    const RecentBlogers = Ids.map(async (id) => {
+      await UserModel.find({ _id: id }).exce();
+    });
+
+    RecentBlogers
+      ? response
+          .status(200)
+          .json({ message: "RecentBlogers Retrived Succefully!" })
+      : response.status(500).json({ message: "RecentBlogers Not Found!" });
+  } catch (error) {
+    console.log("Retriving Recent Blogers Error:", error.message);
+    response.status(500).json({ message: "Retriving Recent Blogers Failed!" });
+  }
+};
 
 export const SignupController = async (request, response) => {
   const { name, email, password } = request.body;
@@ -30,7 +49,6 @@ export const SignupController = async (request, response) => {
       useremail: email,
       userpassword: HashedPass,
       OTP: OTP,
-      OTPExpary: Date.now() + 10 * 60 * 1000,
     });
 
     MailSender(name, email, OTP);
@@ -46,7 +64,7 @@ export const VerifyAccount = async (request, response) => {
   const { email, OTP } = request.body;
   console.log(email);
   try {
-    const user = await UserModel.findOne({ useremail: email });
+    const user = await UserModel.findOne({ useremail: email }).exec();
 
     if (!user) {
       return response.status(400).json({ message: "User Not Found!" });
@@ -64,7 +82,8 @@ export const VerifyAccount = async (request, response) => {
           OTP: "",
         },
       }
-    );
+    ).exec();
+
     const Token = CreateToken(user._id);
     response
       .status(201)
@@ -72,9 +91,7 @@ export const VerifyAccount = async (request, response) => {
       .json({ message: "Your Sign Up Has Been Successful!" });
   } catch (error) {
     console.log("Internal Serevr Error During Validation Operation!");
-    response
-      .status(500)
-      .json({ message: "Internal Serevr Error During Validation Operation!" });
+    response.status(500).json({ message: "Somthing Went Wrong!" });
   }
 };
 
@@ -84,11 +101,11 @@ export const LoginController = async (request, response) => {
     return response.status(400).json({ message: "All Field Are Required!" });
   }
   try {
-    const user = await UserModel.findOne({ useremail: email });
+    const user = await UserModel.findOne({ useremail: email }).exec();
     if (!user) {
       return response.status(400).json({ message: "User Not Found!" });
     }
-    const validPass = await bcrypt.compare(password, user.userpassword);
+    const validPass = bcrypt.compare(password, user.userpassword);
     if (validPass) {
       const Token = CreateToken(user._id);
       response

@@ -7,10 +7,9 @@ export const authenticate = async (request, response, next) => {
   const Token = request.cookies.jwt;
   if (Token) {
     try {
-      const id = jwt.verify(Token, process.env.JWT_SECRET);
-      request.user = await UserModel.findById({ _id: id }).select(
-        "-userpassword"
-      );
+      const decoded = jwt.verify(Token, process.env.JWT_SECRET);
+      const userID = decoded.id;
+      request.user = await UserModel.findById(userID);
       next();
     } catch (error) {
       console.log("Authenticate error:", error);
@@ -26,10 +25,9 @@ export const authorize = async (request, response, next) => {
   const Token = request.cookies.jwt || undefined;
   if (Token) {
     try {
-      const id = jwt.verify(Token, process.env.JWT_SECRET);
-      const user = await UserModel.findById({ _id: id }).select(
-        "-userpassword"
-      );
+      const decoded = jwt.verify(Token, process.env.JWT_SECRET);
+      const userID = decoded.id;
+      const user = await UserModel.findById(userID);
       user.Admin
         ? next()
         : response.status(401).json({ message: "Unauthorized User!" });

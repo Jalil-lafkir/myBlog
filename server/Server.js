@@ -1,10 +1,12 @@
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 import mongoose from "mongoose";
 import passport from "passport";
-import cookieParser from "cookie-parser";
 import session from "express-session";
-import UserRouter from "./Routes/UserRout.js";
+import cookieParser from "cookie-parser";
+import UserRouter from "./Routes/UserRoutes.js";
+import PostRouter from "./Routes/PostRoutes.js";
+import CommentRouter from "./Routes/CommentRout.jsf";
 import GoogleRouter from "./Routes/GoogleAuthRout.js";
 import DB_Connection from "./Configuratons/DB_Connection.js";
 
@@ -28,6 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/user", UserRouter);
+app.use("/post", PostRouter);
+app.use("/comment", CommentRouter);
 app.use("/auth/google", GoogleRouter);
 
 const PORT = process.env.PORT;
@@ -37,3 +41,5 @@ mongoose.connection.once("open", async () => {
     console.log(`Server up and run on port ${PORT}`);
   });
 });
+
+// ABDELJALIL COOK SOMTHING!!!!!!!1

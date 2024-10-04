@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
+import { google } from "googleapis";
 import nodemailer from "nodemailer";
-dotenv.config({ path: "../.env" });
+dotenv.config(dotenv.config({ path: "../.env" }));
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -11,12 +12,12 @@ const transporter = nodemailer.createTransport({
     clientId: process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
     refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-    // accessToken: process.env.OAUTH_ACCESS_TOKEN,
+    accessToken: process.env.OAUTH_ACCESS_TOKEN,
   },
 });
 
 const MailSender = (
-  name = "hhh another test right",
+  name = "abdeljalile lafkir",
   email = "lafkir.abdeldjalile35@g.ens-kouba.dz",
   OTP = "000000"
 ) => {
@@ -42,16 +43,13 @@ const MailSender = (
   };
 
   try {
-    transporter.sendMail(mailOptions, (err, data) => {
-      err
-        ? console.log("Transporter Error " + err)
+    transporter.sendMail(mailOptions, (error, data) => {
+      error
+        ? console.log("Transporter Error " + error)
         : console.log("Email sent successfully", "data");
     });
   } catch (error) {
     console.error(`Error: ${error}`);
   }
 };
-
-MailSender();
-
 export default MailSender;

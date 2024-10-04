@@ -17,4 +17,4 @@ const PostShema = new Schema(
   { timestamps: true }
 );
 
-export const PostModel = model(Post, PostShema);
+export const PostModel = model("Post", PostShema);

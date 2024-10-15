@@ -1,16 +1,22 @@
 import React from "react";
+import { formatDistance } from "date-fns";
 import { Auteur } from "../UserComponents/Auteur";
 
-const Comment = () => {
+const Comment = ({ comment }) => {
   return (
-    <div className="p-8  ">
-      <Auteur />
-      <div className="px-16">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos
-        perspiciatis maxime dicta accusamus? Architecto ratione accusamus vitae
-        fugiat aspernatur adipisci cum, quae distinctio earum quas ex odit
-        tempora maiores eius?
-      </div>
+    <div className="px-10 py-5 flex flex-col gap-y-2 ">
+      <p className="text-xs">
+        {formatDistance(
+          new Date(comment?.createdAt || "2003-10-26"),
+          new Date(),
+          {
+            addSuffix: true,
+          }
+        )}
+      </p>
+      <Auteur writer={comment.auteur} />
+
+      <p className="font-medium">{comment.Commentcontent}</p>
     </div>
   );
 };

@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { api } from "../../api/axios";
 import * as Form from "./FormElements";
-import "../../Style.css";
+import { useNavigate } from "react-router-dom";
+import { usePopup } from "../../Context/PopupContext.jsx";
 
 const LoginCard = () => {
-  const [Email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [LEmail, setLEmail] = useState("");
+  const [Lpassword, setLPassword] = useState("");
+  const { showPopup } = usePopup();
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
-    e.target.attributes.id.nodeValue === "LEmail"
-      ? setEmail(e.target.value)
-      : setPassword(e.target.value);
-    console.log(`email: ${Email}`);
-    console.log(`password: ${password}`);
+    e.target.id === "LEmail"
+      ? setLEmail(e.target.value)
+      : setLPassword(e.target.value);
   };
+
+  const handelLogin = async (event) => {
+    event.preventDefault();
+    const Credintials = JSON.stringify({ email: LEmail, password: Lpassword });
+    try {
+      const response = await api.post("/user/login", Credintials, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      showPopup(5, response.data.message);
+      setTimeout(() => {
+        window.location.replace("http://localhost:5173");
+      }, 6000);
+    } catch (error) {
+      console.log("Login Error", error);
+      showPopup(5, error.response.data.message);
+    }
+  };
+
   const InputsPropsArray = [
     {
       type: "text",
@@ -26,12 +50,6 @@ const LoginCard = () => {
       onChange: handleChange,
     },
     {
-      type: "Checkbox",
-      id: "LCheckbox",
-      placeholder: "Undefind",
-      value: "",
-    },
-    {
       type: "submit",
       id: "LSubmit",
       placeholder: "Undefind",
@@ -39,17 +57,25 @@ const LoginCard = () => {
     },
   ];
 
+  const LoginCard = {
+    width: "100%",
+    height: "100%",
+    backfaceVisibility: "hidden",
+    position: "absolute",
+    transform: "rotateY(0deg)",
+  };
+
   return (
-    <div className="LoginCard">
+    <div style={LoginCard}>
       <div className="text-[23px] font-semibold text-[#5B5B5B] text-center my-4">
         Welocome Back Hero!
       </div>
       <Form.Divider DividerText={"Log In Using E-mail"} />
-      <form className="my-10">
+      <form className="my-10" onSubmit={handelLogin}>
         <Form.InputField InputElementProps={InputsPropsArray[0]} />
         <Form.InputField InputElementProps={InputsPropsArray[1]} />
-        <Form.InputChekBox InputElementProps={InputsPropsArray[2]} />
-        <Form.InputSubmit InputElementProps={InputsPropsArray[3]} />
+        <Form.InputChekBox />
+        <Form.InputSubmit InputElementProps={InputsPropsArray[2]} />
       </form>
       <Form.Divider DividerText={"Or"} />
       <Form.SocialInput />

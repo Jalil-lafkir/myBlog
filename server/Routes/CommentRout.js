@@ -1,4 +1,5 @@
-import express, { request, response } from "express";
+import express from "express";
+import { request, response } from "express";
 import {
   GetPostCommentsController,
   CreateCommentController,
@@ -7,8 +8,8 @@ import {
 import { authenticate, authorize } from "../Middlewares/Auth.js";
 
 const CommentRouter = express.Router();
-CommentRouter.get("/:id", GetPostCommentsController);
-CommentRouter.post("/", CreateCommentController);
-CommentRouter.delete("/:id", DeleteCommentController);
+CommentRouter.get("/:postId", GetPostCommentsController);
+CommentRouter.post("/create", CreateCommentController);
+CommentRouter.delete("/delete", DeleteCommentController);
 
 export default CommentRouter;

@@ -2,10 +2,11 @@ import React from "react";
 import { useContext } from "react";
 import { DarkThemeContext } from "../../Context/DarkThemContext";
 
-export const CommentInput = () => {
+export const CommentInput = ({ handleChange }) => {
   const { isDarkTheme, setisDarkTheme } = useContext(DarkThemeContext);
   const backgroundColor = isDarkTheme ? "black" : "#F0F1F8";
   const borderStyle = isDarkTheme ? "1px solid #5b5b5b" : "1px solid #5b5b5b";
+
   return (
     <div className="h-12 w-full my-3">
       <input
@@ -14,10 +15,12 @@ export const CommentInput = () => {
         type="text"
         id=""
         placeholder="Add Comment"
+        onChange={handleChange}
       />
     </div>
   );
 };
+
 export const SubmitComment = () => {
   return (
     <div className=" flex items-center justify-center">

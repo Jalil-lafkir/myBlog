@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
+import MailSender from "../Utils/MailSender.js";
+import GenerateOTP from "../Utils/GenerateOTP.js";
 import { UserModel } from "../Models/UserModel.js";
 import { PostModel } from "../Models/PostModel.js";
-import GenerateOTP from "../Utils/GenerateOTP.js";
-import MailSender from "../Utils/MailSender.js";
 import {
   CreateToken,
   LoginHearders,
@@ -11,19 +11,56 @@ import {
 
 export const RecentBlogers = async (request, response) => {
   try {
-    const Ids = await PostModel.find({}, "postauteur", { limit: 5 }).exec();
-    const RecentBlogers = Ids.map(async (id) => {
-      await UserModel.find({ _id: id }).exce();
+    const Ids = await PostModel.find()
+      .select("postauteur")
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+
+    const AllBlogers = await Promise.all(
+      Ids.map(async (id) => {
+        const Bloger = await UserModel.findOne({ _id: id.postauteur })
+          .select("username useremail Avatar Admin")
+          .exec();
+        return Bloger || null;
+      })
+    );
+
+    const uniqueBlogers = new Set();
+    const filteredBlogers = AllBlogers.filter((bloger) => {
+      if (bloger && !uniqueBlogers.has(bloger.useremail)) {
+        uniqueBlogers.add(bloger.useremail);
+        return true;
+      }
+      return false;
     });
 
-    RecentBlogers
-      ? response
-          .status(200)
-          .json({ message: "RecentBlogers Retrived Succefully!" })
+    const RecentBlogers = filteredBlogers.slice(0, 5);
+    RecentBlogers.length > 0
+      ? response.status(200).json({
+          message: "RecentBlogers Retrived Succefully!",
+          RecentBlogers: RecentBlogers,
+        })
       : response.status(500).json({ message: "RecentBlogers Not Found!" });
   } catch (error) {
-    console.log("Retriving Recent Blogers Error:", error.message);
+    console.log("Retriving Recent Blogers Error:", error);
     response.status(500).json({ message: "Retriving Recent Blogers Failed!" });
+  }
+};
+
+export const UserState = async (request, response) => {
+  const user = request.user;
+  try {
+    if (user) {
+      response
+        .status(200)
+        .json({ message: "User Retrived Succefully!", user: user });
+    } else {
+      response.status(400).json({ message: " Somthing Went Wrong!" });
+    }
+  } catch (error) {
+    console.log("Cheking State Error:", error.message);
+    response.status(500).json({ message: "Check Satate Failed!" });
   }
 };
 
@@ -62,7 +99,6 @@ export const SignupController = async (request, response) => {
 
 export const VerifyAccount = async (request, response) => {
   const { email, OTP } = request.body;
-  console.log(email);
   try {
     const user = await UserModel.findOne({ useremail: email }).exec();
 
@@ -88,7 +124,7 @@ export const VerifyAccount = async (request, response) => {
     response
       .status(201)
       .cookie("jwt", Token, LoginHearders)
-      .json({ message: "Your Sign Up Has Been Successful!" });
+      .json({ message: "Your Sign Up Has Been Successful!", user: user });
   } catch (error) {
     console.log("Internal Serevr Error During Validation Operation!");
     response.status(500).json({ message: "Somthing Went Wrong!" });
@@ -105,7 +141,7 @@ export const LoginController = async (request, response) => {
     if (!user) {
       return response.status(400).json({ message: "User Not Found!" });
     }
-    const validPass = bcrypt.compare(password, user.userpassword);
+    const validPass = await bcrypt.compare(password, user.userpassword);
     if (validPass) {
       const Token = CreateToken(user._id);
       response

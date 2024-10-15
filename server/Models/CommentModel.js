@@ -7,8 +7,16 @@ const CommentShema = new Schema(
       type: String,
       require: true,
     },
-    Commentauteur: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    commentpost: { type: mongoose.Schema.Types.ObjectId, ref: "Post" },
+    Commentauteur: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
+    commentpost: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      require: true,
+    },
   },
   { timestamps: true }
 );

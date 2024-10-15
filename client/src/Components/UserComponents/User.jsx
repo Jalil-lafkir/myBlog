@@ -1,22 +1,62 @@
 import React from "react";
+import { Logout } from "../../Context/UserContext";
 
-const User = () => {
+const User = ({ bloger }) => {
+  const placeholder = {
+    username: "myBLOOOG user",
+    useremail: "",
+    Avatar:
+      "https://i.pinimg.com/564x/3d/26/02/3d2602e1b11f161f7366c70b06fab7ed.jpg",
+    Admin: false,
+  };
+  if (bloger === null || bloger === undefined) {
+    bloger = { ...placeholder };
+  }
   return (
     <div className="flex items-center gap-x-6 py-4 w-[90%]">
       <img
-        className="h-16 w-16 rounded-full"
-        src="https://scontent.forn3-6.fna.fbcdn.net/v/t39.30808-1/408964817_1587989998405895_5541694720847871021_n.jpg?stp=dst-jpg_s200x200&_nc_cat=109&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=BA11ASKNRQQQ7kNvgHYUS_8&_nc_ht=scontent.forn3-6.fna&oh=00_AYB6B-p3ZIe89F6evGBtFxzRG_24Izzb0X2pD1qZsewyWA&oe=66FB6F8C"
+        className="h-16 w-16 rounded-full border border-solid border-gray"
+        src={bloger.Avatar}
         alt=""
       />
       <div>
-        <h3 className="text-base text-gray">ABDELJALIL LAFKIR</h3>
+        <h3 className="text-base text-gray flex items-center justify-center gap-x-2">
+          {bloger.username}
+          {bloger.Admin ? (
+            <span className="text-xs bg-blue px-2 py-[1px] cursor-pointer rounded-md text-white">
+              Admin
+            </span>
+          ) : (
+            ""
+          )}
+        </h3>
+
         <div className="flex items-center justify-between">
           <p className="text-xs text-gray cursor-pointer hover:underline">
-            @jalil-lafkir
+            {bloger.useremail}
           </p>
-          <span className="text-xs bg-blue px-2 py-[1px] cursor-pointer rounded-md text-white">
-            Admin
-          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+export const Profile = ({ user }) => {
+  return (
+    <div className="flex items-center gap-x-4">
+      <img className="h-12 w-12 rounded-full" src={user.Avatar} />
+      <div className="flex flex-col ">
+        <h3 className="text-base font-semibold text-white lg:text-gray">
+          {user.username}
+        </h3>
+        <div className="flex items-center justify-between">
+          <Logout />
+          {user.Admin ? (
+            <span className="text-xs bg-blue px-2 py-[1px] cursor-pointer rounded-md text-white border-gray boreder-solid border">
+              Admin
+            </span>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

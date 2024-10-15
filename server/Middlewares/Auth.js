@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../Models/UserModel.js";
+
 dotenv.config({ path: "../.env" });
 
 export const authenticate = async (request, response, next) => {
@@ -16,8 +17,7 @@ export const authenticate = async (request, response, next) => {
       response.status(401).json({ message: "Token Faild!" });
     }
   } else {
-    console.log("Authenticate error: Token Not Found!");
-    response.status(401).json({ message: "Token Not Found!" });
+    response.status(401).json({ message: "User Not Authenticated!" });
   }
 };
 
@@ -37,6 +37,6 @@ export const authorize = async (request, response, next) => {
     }
   } else {
     console.log("authorize error: Token Not Found!");
-    response.status(401).json({ message: "Token Not Found!" });
+    response.status(401).json({ message: "User Not Authorized!" });
   }
 };

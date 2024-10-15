@@ -1,18 +1,21 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import { useContext } from "react";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faTelegram } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { DarkThemeContext } from "../../Context/DarkThemContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   const { isDarkTheme, setisDarkTheme } = useContext(DarkThemeContext);
   const backgroundColor = isDarkTheme ? "black" : "white";
   const borderStyle = isDarkTheme ? "1px solid #5b5b5b" : "";
+
   const linkStyle =
     "text-gray relative after:transition-all after:duration-500 after:scale-0 after:content-[''] after:absolute after:left-0 lg:after:top-5 after:top-[20px] after:w-full after:h-0.5 after:bg-gray after:rounded-lg hover:after:scale-100 lg:after:hover:top-5 after:hover:top-[20px] after:hover:left-0 after:hover:h-[2.5px]  after:hover:rounded-lg";
   const iconsStyle = "w-8 h-8 cursor-pointer";
+
   return (
     <section
       className={`w-[100%] h-60 flex items-center justify-end flex-col  ${

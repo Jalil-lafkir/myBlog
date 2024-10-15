@@ -1,6 +1,7 @@
-import passport from "passport";
-import express, { request, response } from "express";
 import "../Utils/Passport.js";
+import express from "express";
+import passport from "passport";
+import { request, response } from "express";
 import GoogleAuthContrller from "../Controllers/GoogleAuthContrller.js";
 
 const GoogleRouter = express.Router();

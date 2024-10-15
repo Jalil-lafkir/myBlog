@@ -15,23 +15,31 @@ export const GoogleAuthContrller = async (request, response) => {
     }).exec();
     if (isRegistred) {
       const Token = CreateToken(isRegistred._id);
-      return response
-        .status(200)
-        .cookie("jwt", Token, cookieHeaders)
-        .json({ message: "Your Log in Has Been Successful!" });
+      return (
+        response
+          .status(200)
+          .cookie("jwt", Token, LoginHearders)
+          // .json({
+          //   message: "Your Log in Has Been Successful!",
+          //   user: isRegistred,
+          // })
+          .redirect("http://localhost:5173/")
+      );
     }
 
-    await UserModel.create({
+    const NewUser = await UserModel.create({
       username: user.name,
       useremail: user.email,
       Avatar: user.picture,
       Verified: user.email_verified,
     });
     const Token = CreateToken(user._id);
+    console.log(NewUser);
     return response
       .status(200)
       .cookie("jwt", Token, LoginHearders)
-      .json({ message: "Your Sign up Has Been Successful!" });
+      .redirect("http://localhost:5173/");
+    // .json({ message: "Your Sign up Has Been Successful!", user: NewUser });
   } catch (error) {
     console.log("Authenticate error:", error.message);
     response.status(500).json({ message: "Authenticate Failed!" });

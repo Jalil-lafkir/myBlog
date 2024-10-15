@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import passport from "passport";
@@ -6,8 +7,9 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import UserRouter from "./Routes/UserRoutes.js";
 import PostRouter from "./Routes/PostRoutes.js";
-import CommentRouter from "./Routes/CommentRout.jsf";
+import CommentRouter from "./Routes/CommentRout.js";
 import GoogleRouter from "./Routes/GoogleAuthRout.js";
+import CorsOptins from "./Configuratons/Allowed_Cors.js";
 import DB_Connection from "./Configuratons/DB_Connection.js";
 
 dotenv.config();
@@ -15,6 +17,7 @@ DB_Connection();
 
 const app = express();
 
+app.use(cors(CorsOptins));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -42,4 +45,4 @@ mongoose.connection.once("open", async () => {
   });
 });
 
-// ABDELJALIL COOK SOMTHING!!!!!!!1
+// ABDELJALIL COOK SOMTHING!!!!!!!

@@ -1,20 +1,47 @@
-import React, { useState } from "react";
-import * as Form from "../Components/FormsComponents/FormElements";
-import { useContext } from "react";
+import React from "react";
+import { api } from "../api/axios.js";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePopup } from "../Context/PopupContext.jsx";
+import { UserContext } from "../Context/UserContext.jsx";
 import { DarkThemeContext } from "../Context/DarkThemContext";
-import { useQuill } from "react-quilljs";
-import "quill/dist/quill.snow.css";
+import * as Form from "../Components/FormsComponents/FormElements";
 
 const NewPost = () => {
-  const { quill, quillRef } = useQuill();
-  const [title, setTitle] = useState("Title");
+  const [title, setTitle] = useState();
   const [postBody, setpostBody] = useState();
+  const { user } = UserContext();
+  const navigate = useNavigate();
+  const { showPopup } = usePopup();
 
   const handleChange = (e) => {
-    setTitle(e.target.value);
+    if (e.target.id === "PostTitle") {
+      setTitle(e.target.value);
+    } else {
+      setpostBody(e.target.value);
+    }
   };
-  const handleBodyChange = (e) => {
-    setpostBody(e);
+
+  const handleSubmitPost = async (event) => {
+    event.preventDefault();
+    const Credintials = JSON.stringify({
+      title: title,
+      content: postBody,
+      auteur: user._id,
+    });
+    try {
+      const response = await api.post("/post/create", Credintials, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      showPopup(5, response.data.message);
+      setTimeout(() => {
+        window.location.replace("http://localhost:5173");
+      }, 6000);
+    } catch (error) {
+      showPopup(5, error.response.data.message);
+    }
   };
 
   const InputsPropsArray = [
@@ -23,6 +50,13 @@ const NewPost = () => {
       id: "PostTitle",
       placeholder: "Title",
       value: title,
+      onChange: handleChange,
+    },
+    {
+      type: "text",
+      id: "PostContent",
+      placeholder: "Write ... ",
+      value: postBody,
       onChange: handleChange,
     },
     {
@@ -39,17 +73,11 @@ const NewPost = () => {
   return (
     <section className="w-[90%] lg:w-[50rem] border border-gray border-solid mx-auto my-[5rem] p-16 rounded-lg flex flex-col items-center justify-center">
       <h1 className="text-2xl">Craete New Post </h1>
-      <Form.InputField InputElementProps={InputsPropsArray[0]} />
-      <div
-        style={{ backgroundColor, border: borderStyle }}
-        value={postBody}
-        className="w-full my-3 rounded-md bg-[#F0F1F8]  min-h-8 "
-        onChange={handleBodyChange}
-        placeholder="Write"
-      >
-        <div ref={quillRef} />
-      </div>
-      <Form.InputSubmit InputElementProps={InputsPropsArray[1]} />
+      <form className="w-[90%]" onSubmit={handleSubmitPost}>
+        <Form.InputField InputElementProps={InputsPropsArray[0]} />
+        <Form.TextAreaField InputElementProps={InputsPropsArray[1]} />
+        <Form.InputSubmit InputElementProps={InputsPropsArray[2]} />
+      </form>
     </section>
   );
 };

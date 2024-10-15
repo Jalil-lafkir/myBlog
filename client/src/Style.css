@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,47 +51,9 @@
   border-radius: 5px;
 }
 
-.RegistrationSection {
-  width: 40rem;
-  height: 43rem;
-  margin: 8rem auto;
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 2rem 5rem;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  perspective: 1000px;
-}
-
 @media only screen and (max-width: 976px) {
   .RegistrationSection {
     width: 90%;
     padding: 2rem 3rem;
   }
-}
-
-.RegitrationCard {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: all 2s;
-  transform-style: preserve-3d;
-}
-
-.LoginCard {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-}
-
-.SignupCard {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
 }

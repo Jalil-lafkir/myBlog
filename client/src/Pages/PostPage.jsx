@@ -92,14 +92,14 @@ const PostPage = () => {
     <Loading text={"Loading Post"} />
   ) : (
     <section className="w-[90%] border border-gray border-solid mx-auto my-[5rem] p-16 rounded-lg flex flex-col items-center justify-center">
-      <h3 className="text-gray text-5xl font-extrabold py-10">
+      <h3 className="text-gray text-5xl font-extrabold py-10 text-center break-words w-full">
         {post?.posttitle}
       </h3>
       <div className="flex items-center flex-col justify-center gap-x-5 py-10 lg:flex-row">
-        <div className="text-lg font-semibold hover:underline">
+        <div className="text-lg font-semibold hover:underline  break-words ">
           by {post?.writer?.useremail},
         </div>
-        <div className="text-lg font-semibold">
+        <div className="text-lg font-semibold  break-words ">
           {formatDistance(
             new Date(post?.createdAt || "2003-10-26"),
             new Date(),
@@ -108,7 +108,7 @@ const PostPage = () => {
         </div>
       </div>
 
-      <div className=" text-center break-words w-full">{post?.postcontent}</div>
+      <div className="text-center break-words w-full">{post?.postcontent}</div>
       <div className="py-12 flex flex-col w-full text-xl font-semibold">
         <h3>Comments</h3>
         <form className="flex items-start flex-col" onSubmit={hundleSubmit}>

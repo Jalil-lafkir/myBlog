@@ -9,7 +9,7 @@ const PostCard = ({ post }) => {
     else
       return (
         <>
-          {content.slice(0, 445)} ...
+          {content.slice(0, 300)} ...
           <Link
             to={`/posts/${post._id}`}
             className="text-blue transition-all cursor-pointer duration-150 hover:underline"
@@ -24,7 +24,7 @@ const PostCard = ({ post }) => {
       <p className="text-sm text-gray">
         {formatDistance(post.createdAt, new Date(), { addSuffix: true })}
       </p>
-      <h3 className="lg:text-3xl text-2xl font-bold  text-gray my-3">
+      <h3 className="lg:text-3xl text-2xl font-bold  text-gray my-3 break-words">
         {post?.posttitle}
       </h3>
       <p className="text-md text-gray my-4 break-words">

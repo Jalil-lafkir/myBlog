@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "nodemon Server.js"
+    "start": "node Server.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

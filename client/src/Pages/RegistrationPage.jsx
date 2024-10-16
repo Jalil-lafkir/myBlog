@@ -22,7 +22,6 @@ const RegistrationPage = () => {
     margin: "8rem auto",
     background: backgroundColor,
     borderRadius: "6px",
-    padding: "2rem 5rem",
     boxShadow: "0 5px 10px rgba(0, 0, 0, 0.4)",
     display: "flex",
     alignItems: "center",
@@ -43,7 +42,10 @@ const RegistrationPage = () => {
   };
 
   return (
-    <section style={RegistrationSection} className="w-[90%] lg:w-[40rem]">
+    <section
+      style={RegistrationSection}
+      className="w-[90%] lg:w-[40rem] px-[2rem] py-[2rem] lg:px-[5rem] lg:py-[2rem]"
+    >
       <div style={RegitrationCard}>
         <LoginCard />
         <SignupCard />

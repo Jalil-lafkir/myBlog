@@ -20,7 +20,7 @@ const User = ({ bloger }) => {
         alt=""
       />
       <div>
-        <h3 className="text-base text-gray flex items-center justify-center gap-x-2">
+        <h3 className="text-base text-gray flex items-center justify-start gap-x-2">
           {bloger.username}
           {bloger.Admin ? (
             <span className="text-xs bg-blue px-2 py-[1px] cursor-pointer rounded-md text-white">

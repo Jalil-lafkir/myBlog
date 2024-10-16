@@ -108,9 +108,7 @@ const PostPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center text-center">
-        {post?.postcontent}
-      </div>
+      <div className=" text-center break-words w-full">{post?.postcontent}</div>
       <div className="py-12 flex flex-col w-full text-xl font-semibold">
         <h3>Comments</h3>
         <form className="flex items-start flex-col" onSubmit={hundleSubmit}>

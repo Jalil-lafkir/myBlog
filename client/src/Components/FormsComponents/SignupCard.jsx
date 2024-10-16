@@ -40,9 +40,6 @@ const SignupCard = () => {
         setGemail(SEmail);
         setIsVerifyPage(true);
         showPopup(5, response.data.message);
-        setTimeout(() => {
-          window.location.replace("http://localhost:5173");
-        }, 6000);
       } catch (error) {
         showPopup(5, error.response.data.message);
       }

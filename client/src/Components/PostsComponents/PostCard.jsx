@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
       <h3 className="lg:text-3xl text-2xl font-bold  text-gray my-3">
         {post?.posttitle}
       </h3>
-      <p className="text-md text-gray my-4 block">
+      <p className="text-md text-gray my-4 break-words">
         {prettyContent(post?.postcontent)}
       </p>
       <Auteur writer={post?.writer} />

@@ -19,5 +19,8 @@ export const LoginHearders = {
 };
 export const LogoutHearders = {
   httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "None",
+  secure: true,
   expires: new Date(0),
 };

@@ -47,7 +47,7 @@ export const Logout = () => {
       });
       showPopup(5, response.data.message);
       setTimeout(() => {
-        window.location.replace("http://localhost:5173");
+        window.location.replace("https://mybloog-qlv9.onrender.com");
       }, 6000);
     } catch (error) {
       showPopup(5, error.response.data.message);

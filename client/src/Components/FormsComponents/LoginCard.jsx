@@ -28,7 +28,7 @@ const LoginCard = () => {
       });
       showPopup(5, response.data.message);
       setTimeout(() => {
-        window.location.replace("http://localhost:5173");
+        window.location.replace("https://mybloog-qlv9.onrender.com");
       }, 6000);
     } catch (error) {
       console.log("Login Error", error);

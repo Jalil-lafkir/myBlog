@@ -1,6 +1,7 @@
 const allowedOrigins = [
   "https://mybloog-qlv9.onrender.com",
   "https://mybloog-qlv9.onrender.com/auth/google/callback",
+  "https://myblooog.onrender.com/auth/google/callback",
 ];
 
 const CorsOptions = {

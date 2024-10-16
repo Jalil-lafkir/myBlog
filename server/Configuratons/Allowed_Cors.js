@@ -1,7 +1,5 @@
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "http://localhost:5173/auth/google/callback",
+  "https://mybloog-qlv9.onrender.com",
   "http://localhost:3000/auth/google/callback",
 ];
 

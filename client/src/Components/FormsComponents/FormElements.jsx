@@ -75,7 +75,7 @@ export const SocialInput = () => {
   return (
     <Link
       style={{ backgroundColor, border: borderStyle }}
-      to="http://localhost:3000/auth/google"
+      to="https://myblooog.onrender.com/auth/google/callback"
       className="h-12 w-full flex items-center justify-center gap-2 bg-[#F0F1F8] rounded-lg text-[16px] text-[#5B5B5B] no-underline"
     >
       <FontAwesomeIcon icon={faGoogle} />

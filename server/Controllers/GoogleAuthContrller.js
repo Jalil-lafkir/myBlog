@@ -23,7 +23,7 @@ export const GoogleAuthContrller = async (request, response) => {
           //   message: "Your Log in Has Been Successful!",
           //   user: isRegistred,
           // })
-          .redirect("http://localhost:5173/")
+          .redirect("https://mybloog-qlv9.onrender.com")
       );
     }
 
@@ -38,7 +38,7 @@ export const GoogleAuthContrller = async (request, response) => {
     return response
       .status(200)
       .cookie("jwt", Token, LoginHearders)
-      .redirect("http://localhost:5173/");
+      .redirect("https://mybloog-qlv9.onrender.com");
     // .json({ message: "Your Sign up Has Been Successful!", user: NewUser });
   } catch (error) {
     console.log("Authenticate error:", error.message);

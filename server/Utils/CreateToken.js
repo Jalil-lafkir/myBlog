@@ -13,7 +13,8 @@ export const CreateToken = (userID) => {
 export const LoginHearders = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "None",
+  secure: true,
   maxAge: 3 * 24 * 60 * 60 * 1000,
 };
 export const LogoutHearders = {
